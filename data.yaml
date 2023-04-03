@@ -1,0 +1,15 @@
+# Path to dataset root directory
+path: C:/Users/jerzy.slomkowski/git/sandbox/sample_images_for_yolo/datasets/shapes
+
+# Train and validation image directories (relative to dataset root)
+train: images/train
+val: images/val
+
+# Test image directory (optional)
+test: images/test
+
+# Class names and IDs
+names:
+  0: rectangle
+  1: circle
+  2: triangle

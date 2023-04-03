@@ -1,0 +1,20 @@
+name: ai_plays_contra
+channels:
+  - conda-forge
+  - default
+  - pytorch 
+  - nvidia
+dependencies:
+  - python=3.10
+  - pip
+  - autopep8
+  - flake8
+  - ipykernel
+  - ipywidgets
+  - opencv
+  - pytorch
+  - torchvision
+  - pytorch-cuda=11.7
+  - pip:
+    - ultralytics
+    - label-studio

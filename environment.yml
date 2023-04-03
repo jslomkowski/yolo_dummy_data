@@ -1,4 +1,4 @@
-name: ai_plays_contra
+name: yolo_dummy_data
 channels:
   - conda-forge
   - default

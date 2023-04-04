@@ -1,13 +1,12 @@
 import random
 import matplotlib.pyplot as plt
-import numpy as np
 import os
 import shutil
 
-num_images = 100
-img_size = 500
-max_box_size = 200
-min_box_size = 50
+num_images = 1000
+img_size = 200
+max_box_size = img_size / 2
+min_box_size = img_size / 5
 max_num_boxes = 1
 min_num_boxes = 1
 train_ratio = 0.7
@@ -38,12 +37,16 @@ test_counter = 0
 val_counter = 0
 
 for i in range(num_images):
-    fig, ax = plt.subplots()
+
+    # i = 0
+    fig, ax = plt.subplots(figsize=(img_size / 100, img_size / 100))
     ax.set_xlim([0, img_size])
     ax.set_ylim([0, img_size])
     ax.axis('off')  # Remove axis
     num_boxes = random.randint(min_num_boxes, max_num_boxes)
     shapes = ['rectangle', 'circle', 'triangle']
+    # shapes = ['rectangle']
+
     boxes = []
     for j in range(num_boxes):
         shape = random.choice(shapes)
@@ -57,15 +60,6 @@ for i in range(num_images):
             rect = plt.Rectangle((x1, y1), box_size, box_size,
                                  linewidth=1, edgecolor='black', facecolor='black')
             ax.add_patch(rect)
-        elif shape == 'circle':
-            radius = random.randint(min_box_size // 2, max_box_size // 2)
-            x_center = random.randint(radius, img_size - radius)
-            y_center = random.randint(radius, img_size - radius)
-            boxes.append((x_center - radius, y_center - radius,
-                         x_center + radius, y_center + radius))
-            circle = plt.Circle((x_center, y_center), radius,
-                                linewidth=1, edgecolor='black', facecolor='black')
-            ax.add_patch(circle)
         elif shape == 'triangle':
             size = random.randint(min_box_size, max_box_size)
             x1 = random.randint(0, img_size - size)
@@ -74,11 +68,18 @@ for i in range(num_images):
             y2 = y1
             x3 = x1 + size // 2
             y3 = y1 + size
-            boxes.append((x1, y1, x2, y3))
+            boxes.append((x1 + size // 2, y1 + size // 2, size, size))
             triangle = plt.Polygon(
                 [(x1, y1), (x2, y2), (x3, y3)], linewidth=1, edgecolor='black', facecolor='black')
             ax.add_patch(triangle)
-
+        elif shape == 'circle':
+            radius = random.randint(min_box_size // 2, max_box_size // 2)
+            x_center = random.randint(radius, img_size - radius)
+            y_center = random.randint(radius, img_size - radius)
+            boxes.append((x_center, y_center, radius, radius))
+            circle = plt.Circle((x_center, y_center), radius,
+                                linewidth=1, edgecolor='black', facecolor='black')
+            ax.add_patch(circle)
     # Save image to 'datasets/shapes/images/'
     filename = f'random_image_{i}.png'
     plt.savefig(f'datasets/shapes/images/{filename}')
@@ -87,18 +88,33 @@ for i in range(num_images):
     # Save box positions to a text file in YOLO format to 'datasets/shapes/labels/'
     with open(f'datasets/shapes/labels/{os.path.splitext(filename)[0]}.txt', 'w') as f:
         for box in boxes:
-            if len(box) == 4:  # Rectangle or triangle
-                x_center = (box[0] + box[2]) / 2 / img_size
-                y_center = (box[1] + box[3]) / 2 / img_size
+            if shape == 'rectangle':
+                shape_class = 0
+            elif shape == 'circle':
+                shape_class = 1
+            elif shape == 'triangle':
+                shape_class = 2
+
+            if shape == 'triangle':
+                x_center = box[0] / img_size
+                y_center = 1 - (box[1] / img_size)
+                width = size / img_size
+                height = size / img_size
+                f.write(
+                    f'{shape_class} {x_center:.6f} {y_center:.6f} {width:.6f} {height:.6f}\n')
+            elif shape == 'rectangle':
+                x_center = (box[0] + box[2]) / (2 * img_size)
+                y_center = 1 - ((box[1] + box[3]) / (2 * img_size))
                 width = (box[2] - box[0]) / img_size
                 height = (box[3] - box[1]) / img_size
                 f.write(
-                    f'0 {x_center:.6f} {y_center:.6f} {width:.6f} {height:.6f}\n')
-            elif len(box) == 2:  # Circle
+                    f'{shape_class} {x_center:.6f} {y_center:.6f} {width:.6f} {height:.6f}\n')
+            elif shape == 'circle':
                 x_center = box[0] / img_size
-                y_center = box[1] / img_size
-                radius = (box[2] - box[0]) / 2
-                f.write(f'1 {x_center:.6f} {y_center:.6f} {radius:.6f}\n')
+                y_center = 1 - (box[1] / img_size)
+                radius = radius * 2 / img_size
+                f.write(
+                    f'{shape_class} {x_center:.6f} {y_center:.6f} {radius:.6f} {radius:.6f}\n')
 
     # Split the dataset into train, test, and val
     if train_counter < num_train_images:

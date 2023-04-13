@@ -6,7 +6,7 @@ import random
 
 image_shape = (200, 200)
 box_size = np.random.randint(10, 150)
-samples = 10
+samples = 1000
 
 # Remove existing dataset directory, if present
 shutil.rmtree('datasets', ignore_errors=True)
@@ -44,7 +44,7 @@ for i in range(samples):
     # Set axis limits and remove axis
     ax.set_xlim(0, image_shape[0])
     ax.set_ylim(0, image_shape[1])
-    ax.invert_yaxis()
+    # ax.invert_yaxis()
     ax.set_axis_off()
 
     # Save image and define YOLO labels

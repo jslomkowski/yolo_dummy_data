@@ -4,6 +4,18 @@ This is under developement. and structure does not represent final package struc
 
 this is a project that aims to generate sample data for computer vision algorithms and the bounding boxes.
 
+## Prerequisites
+-----------------------------
+
+It only requires matplotlib. However, if you want to test the YOLO algorithm, run environment.yml
+
+## Installing
+-----------------------------
+
+```
+conda env create -f environment.yml
+```
+
 ## Getting Started
 -----------------------------
 
@@ -29,17 +41,6 @@ Example usage:
 
 ```bash
 python make_dummy_data.py --image_shape 200 200 --box_size 25 50 --samples 100 --train_size 0.7 --test_size 0.2
-```
-## Prerequisites
------------------------------
-
-It only requires matplotlib. However, if you want to test the YOLO algorithm, run environment.yml
-
-## Installing
------------------------------
-
-```
-conda env create -f environment.yml
 ```
 
 ## Running the tests

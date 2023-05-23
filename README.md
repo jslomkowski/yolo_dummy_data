@@ -6,12 +6,12 @@ this is a project that aims to generate sample data for computer vision algorith
 
 ## Getting Started
 -----------------------------
-
-Just run make__dummy_data.py
+install the package using pip
+```bash
+pip install git+https://github.com/jslomkowski/yolo_dummy_data.git
+```
 
 The parameters that can be changed are the size of the image, the size of the boxes and the number of samples generated.
-
-All parameters can be changed in the file make_dummy_data.py
 
 The code uses the argparse module to create a command-line interface for generating a shapes dataset. The program takes in various arguments to customize the dataset.
 
@@ -28,21 +28,5 @@ The code uses the argparse module to create a command-line interface for generat
 Example usage:
 
 ```bash
-python make_dummy_data.py --image_shape 200 200 --box_size 25 50 --samples 100 --train_size 0.7 --test_size 0.2
+generate_shapes_dataset --image_shape 200 200 --box_size 25 50 --samples 100 --train_size 0.7 --test_size 0.2
 ```
-## Prerequisites
------------------------------
-
-It only requires matplotlib. However, if you want to test the YOLO algorithm, run environment.yml
-
-## Installing
------------------------------
-
-```
-conda env create -f environment.yml
-```
-
-## Running the tests
------------------------------
-
-after generating sample data, run test_boxes.py

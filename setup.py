@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='yolo_dummy_data',
-    version='0.1.0',
+    version='0.1.1',
     author='Jerzy Słomkowski',
     description='simple script to generate dummy data for YOLO training',
     packages=find_packages(),
@@ -16,8 +16,6 @@ setup(
     install_requires=[
         'numpy',
         'matplotlib',
-        'git+https://github.com/jslomkowski/yolo_dummy_data.git',
-
     ],
     entry_points={
         'console_scripts': [

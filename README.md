@@ -1,27 +1,23 @@
 
 # Yolo dummy data
-This is under developement. and structure does not represent final package structure.
+This is under developement
 
 this is a project that aims to generate sample data for computer vision algorithms and the bounding boxes.
 
 ## Prerequisites
------------------------------
 
-It only requires matplotlib. However, if you want to test the YOLO algorithm, run environment.yml
+
+It only requires matplotlib and numpy.
 
 ## Installing
------------------------------
 
-```
-conda env create -f environment.yml
-```
-
-## Getting Started
------------------------------
 install the package using pip
 ```bash
 pip install git+https://github.com/jslomkowski/yolo_dummy_data.git
 ```
+
+## Getting Started
+
 
 The parameters that can be changed are the size of the image, the size of the boxes and the number of samples generated.
 
@@ -37,8 +33,12 @@ The code uses the argparse module to create a command-line interface for generat
 
 `--test_size`: A float specifying the percentage of samples to be used for testing. This argument is optional and defaults to 0.1 (10%).
 
-Example usage:
+Simple example:
+```bash
+generate_shapes_dataset
+```
 
+More "advanced" example:
 ```bash
 generate_shapes_dataset --image_shape 200 200 --box_size 25 50 --samples 100 --train_size 0.7 --test_size 0.2
 ```
